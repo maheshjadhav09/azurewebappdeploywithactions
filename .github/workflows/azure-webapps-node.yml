@@ -9,6 +9,7 @@ env:
   NODE_VERSION: ${{ vars.NODE_VERSION }}               
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
