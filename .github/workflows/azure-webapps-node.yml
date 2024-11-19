@@ -9,7 +9,6 @@ env:
   NODE_VERSION: ${{ vars.NODE_VERSION }}               
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
@@ -42,6 +41,7 @@ jobs:
   deploy:
     permissions:
       contents: none
+      id-token: write
     runs-on: ubuntu-latest
     needs: build
     environment:
@@ -58,12 +58,11 @@ jobs:
       run: unzip release.zip
       
     - name: "Login via Azure CLI"
-      uses: azure/login@v1
+      uses: azure/login@v2
       with:
         client-id: 'b16b3fce-c4c4-444d-9081-54d95f0ae049'
         tenant-id: "2bf6b7c6-bb2b-49a9-8a45-2539a9e75d05"
         subscription-id: "6960d20f-4d42-4990-b3b1-890c7bb30bb6"
-        audience: "api://b16b3fce-c4c4-444d-9081-54d95f0ae049/.default"
         
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
